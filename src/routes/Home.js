@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import config from '../config';
 import CardContainer from '../components/card-container/CardContainer';
 
@@ -11,7 +12,7 @@ export class Home extends React.Component {
   }
   componentDidMount(){
     window.scrollTo(0, 0);
-    fetch(`${config.API_ENDPOINT}/blog`)
+    axios.get(`${config.API_ENDPOINT}/blog`)
       .then(response => {
         const data = response.data.data;
         this.setState({
