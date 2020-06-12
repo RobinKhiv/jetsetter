@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import config from '../config';
+import './Blog.css';
 
 export class Blog extends React.Component {
     constructor(){

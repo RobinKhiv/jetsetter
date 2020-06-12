@@ -1,0 +1,14 @@
+.font-size-lg{
+    font-size: 1.2em;
+}
+@media only screen and (min-width: 678px ){
+
+    .height-large-resp{
+        height: 18rem;
+        object-fit: fill;
+    }
+    .col-4half-resp{
+        height: 8.5rem;
+        object-fit: cover;
+    }
+}

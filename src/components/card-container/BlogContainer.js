@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './BlogContainer.css';
 
 export default class BlogContainer extends React.Component {
     constructor(){
