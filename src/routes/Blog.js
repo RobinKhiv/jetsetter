@@ -15,14 +15,26 @@ export class Blog extends React.Component {
         const { blog_id } = this.props.match.params;
         this.fetchBlogs(blog_id);
     }
+    componentDidUpdate() {
+        window.scrollTo(0, 0)
+        const { blog_id } = this.props.match.params;
+        if(blog_id !== this.state.current_blog_id && this.state.current_blog_id !== null){
+            this.fetchBlogs(blog_id);
+        }
+    }
     fetchBlogs(blog_id){
-        return fetch(`${config.API_ENDPOINT}/blog/${blog_id}`).then(response => {
-            const blogContent = response.data.data;
-            this.setState({
-                blog: blogContent,
-                current_blog_id: blog_id
-            });
-        })
+        return fetch(`${config.API_ENDPOINT}/blog/${blog_id}`)
+            .then(res =>
+                (!res.ok)
+                ? res.json().then(e => Promise.reject(e))
+                : res.json())
+            .then(data => {
+                const blogContent = data.data;
+                this.setState({
+                    blog: blogContent,
+                    current_blog_id: blog_id
+                });
+            })
     }
     renderContent (content)  {
       const blogContent = [];

@@ -16,6 +16,13 @@ export class BlogCategory extends Component {
         const { category_id } = this.props.match.params;
         this.fetchCategories(category_id);
     }
+    componentDidUpdate() {
+        window.scrollTo(0, 0);
+        const { category_id } = this.props.match.params;
+        if(category_id !== this.state.current_category && this.state.current_category !== null){
+            this.fetchCategories(category_id);
+        }
+    }
     fetchCategories(category_id){
         axios.get(`${config.API_ENDPOINT}/category/${category_id}`).then(response => {
             const blogs = response.data.data;
