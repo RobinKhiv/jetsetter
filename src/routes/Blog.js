@@ -40,9 +40,9 @@ export class Blog extends React.Component {
     renderContent (content)  {
       const blogContent = [];
       content.forEach(element => {
-        if(element.type === 'paragraph' || element.type === 'intro') blogContent.push(<p class="text-body font-size-lg" key={element.id}>{ReactHtmlParser(element.content)}</p>);
+        if(element.type === 'paragraph' || element.type === 'intro') blogContent.push(<p class="text-body " key={element.id}>{ReactHtmlParser(element.content)}</p>);
         else if (element.type === `img` || element.type === 'img_main') {
-            let elClass = ' mt-3 mb-3 img-fluid pr-1 pl-1 ';
+            let elClass = ' mt-5 mb-5 img-fluid pr-1 pl-1 ';
             const elStyle = {};
             console.log(element.size)
             if(Number(element.size) === 3.00){
@@ -68,11 +68,11 @@ export class Blog extends React.Component {
                 elClass+= ' col-md-8 height-large-resp float-left';
             }
             else {
-                elClass+= 'mx-auto d-block';
+                elClass+= 'mx-auto d-block img-max';
             }
             console.log(elStyle)
             blogContent.push(<img key={element.id} class={elClass} style={elStyle} src={element.content} title={element.alt} alt={element.alt} /> );} 
-        else if(element.type === 'title' || element.type === 'big_title') blogContent.push(<h2 class="h1" key={element.id}>{ReactHtmlParser(element.content)}</h2>);
+        else if(element.type === 'title' || element.type === 'big_title') blogContent.push(<h2 class="h1 mt-5 mb-3 font-weight-bold" key={element.id}>{ReactHtmlParser(element.content)}</h2>);
       })
       return blogContent;
     }

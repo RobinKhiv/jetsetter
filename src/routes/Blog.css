@@ -12,3 +12,7 @@
         object-fit: cover;
     }
 }
+.img-max {
+    max-width: 500px !important;
+    /* max-height: 500px !important; */
+  }
