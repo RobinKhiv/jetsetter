@@ -44,7 +44,7 @@ export default class BlogContainer extends React.Component {
             <div className="mt-3 col-lg-4 d-flex align-items-stretch mb-4">
                 <div className="card">
                     <img src={src} className="card-img-top" alt={alt}/>
-                    <div class="card-body">
+                    <div className="card-body">
                         <Link to={`/blog/${blog_id}`}>
                             <h3 className="card-title">{title}</h3>
                         </Link>

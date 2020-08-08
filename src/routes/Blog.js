@@ -82,15 +82,15 @@ export class Blog extends React.Component {
         return (
             <React.Fragment>
                 <section className="container mt-4">
-                    <div class="row justify-content-md-center">
-                        <div class="col-lg-9">
+                    <div className="row justify-content-md-center">
+                        <div className="col-lg-9">
                             {this.renderContent(blog_content)}
                         </div>
                     </div>
                 </section>
                 <section className="container">
-                    <div class="row">
-                        <div class="col-lg-12">
+                    <div className="row">
+                        <div className="col-lg-12">
                             <p>Tags</p>
                             <p>Leave a comment</p>
                         </div>
