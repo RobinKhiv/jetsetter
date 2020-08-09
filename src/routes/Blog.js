@@ -17,7 +17,7 @@ export class Blog extends React.Component {
         this.fetchBlogs(blog_id);
     }
     componentDidUpdate() {
-        window.scrollTo(0, 0)
+        // window.scrollTo(0, 0)
         const { blog_id } = this.props.match.params;
         if(blog_id !== this.state.current_blog_id && this.state.current_blog_id !== null){
             this.fetchBlogs(blog_id);
@@ -69,15 +69,15 @@ export class Blog extends React.Component {
                 elClass+= ' col-md-8 height-large-resp float-left';
             }
             else {
-                elClass+= 'mx-auto d-block img-max';
+                elStyle.width = 60 + '%';
+                elStyle.margin = 0+ " auto";
             }
             console.log(elStyle)
             blogContent.push( 
-                <div>
-
-            <a href={"#"+element.id+ "_popup"} >
-                <img key={element.id} id={element.id}  class={elClass} style={elStyle} src={element.content} title={element.alt} alt={element.alt} />
-            </a> 
+            <div style={elStyle}>
+                <a href={"#"+element.id+ "_popup"} >
+                    <img key={element.id} id={element.id} src={element.content} style={{width: 100 +"%" }}title={element.alt} alt={element.alt} />
+                </a> 
             </div>
             );
             popups.push(this.renderImg(element.id, element.content, element.alt));
@@ -86,18 +86,13 @@ export class Blog extends React.Component {
       })
       return blogContent.concat(popups);
     }
-    // renderimg1(){
-    //     <a href={"#"+element.id+ "_popup"} class={el.class}>
-    //         <img key={element.id}  class={elClass} style={elStyle} src={element.content} title={element.alt} alt={element.alt} />
-    //     </a>
-    // }
 
     renderImg = (id, src, alt) =>{
         return(
             <div class="popup" id={id +"_popup"}>
-                        <a href={"#"+ id} class="popup__close">&times;</a>      
+                    <a href={"#"+ id} class="popup__close">&times;</a>      
                 <div class="popup__content">
-                        <img src={src} alt={alt} class="popup__img"/>
+                    <img src={src} alt={alt} class="popup__img"/>
             </div>
         </div>
         )

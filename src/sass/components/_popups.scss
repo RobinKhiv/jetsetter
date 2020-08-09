@@ -19,7 +19,7 @@
     &__content {
         @include absCenter;
         @media only screen and (max-width: 100em) {
-            width: 70vw;
+            width: 60vw;
         }
         @include respond(phone) {
             width: 80vw;

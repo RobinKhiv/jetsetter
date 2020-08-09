@@ -39,7 +39,7 @@ body {
     transition: all .5s .2s; }
     @media only screen and (max-width: 100em) {
       .popup__content {
-        width: 70vw; } }
+        width: 60vw; } }
     @media only screen and (max-width: 37.5em) {
       .popup__content {
         width: 80vw; } }
