@@ -39,6 +39,7 @@ export class Blog extends React.Component {
     }
     renderContent (content)  {
       const blogContent = [];
+      const popups = [];
       content.forEach(element => {
         if(element.type === 'paragraph' || element.type === 'intro') blogContent.push(<p class="text-body " key={element.id}>{ReactHtmlParser(element.content)}</p>);
         else if (element.type === `img` || element.type === 'img_main') {
@@ -71,10 +72,35 @@ export class Blog extends React.Component {
                 elClass+= 'mx-auto d-block img-max';
             }
             console.log(elStyle)
-            blogContent.push(<img key={element.id} class={elClass} style={elStyle} src={element.content} title={element.alt} alt={element.alt} /> );} 
+            blogContent.push( 
+                <div>
+
+            <a href={"#"+element.id+ "_popup"} >
+                <img key={element.id} id={element.id}  class={elClass} style={elStyle} src={element.content} title={element.alt} alt={element.alt} />
+            </a> 
+            </div>
+            );
+            popups.push(this.renderImg(element.id, element.content, element.alt));
+        } 
         else if(element.type === 'title' || element.type === 'big_title') blogContent.push(<h2 class="h1 mt-5 mb-3 font-weight-bold" key={element.id}>{ReactHtmlParser(element.content)}</h2>);
       })
-      return blogContent;
+      return blogContent.concat(popups);
+    }
+    // renderimg1(){
+    //     <a href={"#"+element.id+ "_popup"} class={el.class}>
+    //         <img key={element.id}  class={elClass} style={elStyle} src={element.content} title={element.alt} alt={element.alt} />
+    //     </a>
+    // }
+
+    renderImg = (id, src, alt) =>{
+        return(
+            <div class="popup" id={id +"_popup"}>
+                        <a href={"#"+ id} class="popup__close">&times;</a>      
+                <div class="popup__content">
+                        <img src={src} alt={alt} class="popup__img"/>
+            </div>
+        </div>
+        )
     }
 
     render() {

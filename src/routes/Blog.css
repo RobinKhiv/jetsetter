@@ -13,6 +13,7 @@
     }
 }
 .img-max {
-    max-width: 500px !important;
+    max-width: 100%;
+    /* max-width: 500px !important; */
     /* max-height: 500px !important; */
-  }
+}
