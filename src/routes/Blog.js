@@ -18,11 +18,12 @@ export class Blog extends React.Component {
     }
     componentDidUpdate() {
         // window.scrollTo(0, 0)
-        const { blog_id } = this.props.match.params;
-        if(blog_id !== this.state.current_blog_id && this.state.current_blog_id !== null){
-            this.fetchBlogs(blog_id);
-        }
+        // const { blog_id } = this.props.match.params;
+        // if(blog_id !== this.state.current_blog_id && this.state.current_blog_id !== null){
+        //     this.fetchBlogs(blog_id);
+        // }
     }
+
     fetchBlogs(blog_id){
         return fetch(`${config.API_ENDPOINT}/blog/${blog_id}`)
             .then(res =>
@@ -40,61 +41,225 @@ export class Blog extends React.Component {
     renderContent (content)  {
       const blogContent = [];
       const popups = [];
-      content.forEach(element => {
-        if(element.type === 'paragraph' || element.type === 'intro') blogContent.push(<p class="text-body " key={element.id}>{ReactHtmlParser(element.content)}</p>);
-        else if (element.type === `img` || element.type === 'img_main') {
-            let elClass = ' mt-5 mb-5 img-fluid pr-1 pl-1 ';
-            const elStyle = {};
-            console.log(element.size)
-            if(Number(element.size) === 3.00){
-                elClass+= 'col-sm-3';
-                elStyle.width= 13+'rem';
-                elStyle.height= 12.5+'rem'; 
-                elStyle.objectFit= 'cover';
+
+      for(let i = 0; i < content.length; i++){
+        if(content[i].type === 'paragraph' || content[i].type === 'intro') 
+            if(content[i].content.substring(1,3)  === "ul")
+                blogContent.push(ReactHtmlParser(content[i].content));
+            else
+                blogContent.push(<p className="text-body " key={content[i].id}>{ReactHtmlParser(content[i].content)}</p>);
+        else if(content[i].type === 'title' || content[i].type === 'big_title') 
+            blogContent.push(<h2 className="h1 mt-5 mb-3 font-weight-bold" key={content[i].id}>{ReactHtmlParser(content[i].content)}</h2>);
+        else if (content[i].type === `img` || content[i].type === 'img_main') {
+            if(Number(content[i].size) === 3.00 && Number(content[i+1].size) === 3.00 && Number(content[i+2].size) === 3.00 && Number(content[i+3].size) === 3.00 ){   
+                blogContent.push(
+                <div key={content[i].id} className="gallery">
+                    <div  className="gallery__item--30">
+                        <a href={"#"+content[i].id+ "_popup"} >
+                            <img id={content[i].id} src={content[i].content} className="gallery__img" title={content[i].alt} alt={content[i].alt} />
+                        </a> 
+                    </div>
+                    <div className="gallery__item--30"  >
+                        <a href={"#"+content[i + 1].id+ "_popup"} >
+                            <img id={content[i +1].id} src={content[i + 1].content} className="gallery__img" title={content[i +1].alt} alt={content[i +1].alt} />
+                        </a> 
+                    </div>
+                    <div  className="gallery__item--30"  >
+                        <a href={"#"+content[i+2].id+ "_popup"} >
+                            <img id={content[i+2].id} src={content[i+2].content} className="gallery__img" title={content[i+2].alt} alt={content[i+2].alt} />
+                        </a> 
+                    </div>
+                    <div  className="gallery__item--30"  >
+                        <a href={"#"+content[i+3].id+ "_popup"} >
+                            <img id={content[i+3].id} src={content[i+3].content} className="gallery__img" title={content[i+3].alt} alt={content[i+3].alt} />
+                        </a> 
+                    </div>
+                </div>);
+                popups.push(this.renderImg(content[i].id, content[i].content, content[i].alt));
+                popups.push(this.renderImg(content[i + 1].id, content[i+ 1].content, content[i+1].alt));
+                popups.push(this.renderImg(content[i + 2].id, content[i+2].content, content[i+2].alt));
+                popups.push(this.renderImg(content[i + 3].id, content[i+3].content, content[i+3].alt));
+                i= i+3;
             }
-            else if(Number(element.size) === 4.00){
-                console.log('entered')
-                elClass+= 'col-sm-4 mb-4 height-large-resp';
+            else if((Number(content[i].size) === 5.00 && Number(content[i+1].size) === 2.00 && Number(content[i+2].size) === 5.00))
+            {
+                blogContent.push(
+                    <div key={content[i].id} class="gallery522">
+                        <div class="gallery522__item--1">
+                            <a href={"#"+content[i].id+ "_popup"} >
+                                <img id={content[i].id} src={content[i].content} class="gallery__img" title={content[i].alt} alt={content[i].alt} />
+                            </a> 
+                        </div>
+                        <div class="gallery522__item--2" >
+                            <a href={"#"+content[i + 1].id+ "_popup"} >
+                                <img id={content[i +1].id} src={content[i + 1].content} class="gallery__img" title={content[i +1].alt} alt={content[i +1].alt} />
+                            </a> 
+                        </div>
+                        <div class="gallery522__item--3" >
+                            <a href={"#"+content[i+2].id+ "_popup"} >
+                                <img id={content[i+2].id} src={content[i+2].content} class="gallery__img" title={content[i+2].alt} alt={content[i+2].alt} />
+                            </a> 
+                        </div>
+                    </div>);
+                    popups.push(this.renderImg(content[i].id, content[i].content, content[i].alt));
+                    popups.push(this.renderImg(content[i + 1].id, content[i+ 1].content, content[i+1].alt));
+                    popups.push(this.renderImg(content[i + 2].id, content[i+2].content, content[i+2].alt));
+                    i= i+2;
             }
-            else if(Number(element.size) === 4.50){
-                elClass+= 'col-4half-resp col-md-4';
+            else if((Number(content[i].size) === 4.00 && Number(content[i+1].size) === 4.00) ){
+                blogContent.push(
+                    <div key={content[i].id} className="gallery444">
+                        <div className="gallery444__item--1">
+                            <a href={"#"+content[i].id+ "_popup"} >
+                                <img id={content[i].id} src={content[i].content} className="gallery__img" title={content[i].alt} alt={content[i].alt} />
+                            </a>
+                        </div>
+                        <div className="gallery444__item--2"  >
+                            <a href={"#"+content[i + 1].id+ "_popup"} >
+                                <img id={content[i +1].id} src={content[i + 1].content} className="gallery__img" title={content[i +1].alt} alt={content[i +1].alt} />
+                            </a> 
+                        </div>
+                        <div className="gallery444__item--3"  >
+                            <a href={"#"+content[i+2].id+ "_popup"} >
+                                <img id={content[i+2].id} src={content[i+2].content} className="gallery__img" title={content[i+2].alt} alt={content[i+2].alt} />
+                            </a> 
+                        </div>
+                    </div>);
+                    popups.push(this.renderImg(content[i].id, content[i].content, content[i].alt));
+                    popups.push(this.renderImg(content[i + 1].id, content[i+ 1].content, content[i+1].alt));
+                    popups.push(this.renderImg(content[i + 2].id, content[i+2].content, content[i+2].alt));
+                    i= i+2;
+            }
+            else if((Number(content[i].size) === 6.00 && Number(content[i+1].size) === 2.00) || (Number(content[i].size) === 2.00 && Number(content[i+1].size) === 6.00) || (Number(content[i].size) === 4.00 && Number(content[i+1].size) === 2.00)){
+                blogContent.push(
+                    <div key={content[i].id} className="gallery2622">
+                        <div  className="gallery2622__item--1">
+                            <a href={"#"+content[i].id+ "_popup"} >
+                                <img id={content[i].id} src={content[i].content} className="gallery__img" title={content[i].alt} alt={content[i].alt} />
+                            </a> 
+                        </div>
+                        <div className="gallery2622__item--2">
+                            <a href={"#"+content[i + 1].id+ "_popup"} >
+                                <img id={content[i +1].id} src={content[i + 1].content} className="gallery__img" title={content[i +1].alt} alt={content[i +1].alt} />
+                            </a> 
+                        </div>
+                        <div  className="gallery2622__item--3">
+                            <a href={"#"+content[i+2].id+ "_popup"} >
+                                <img id={content[i+2].id} src={content[i+2].content} className="gallery__img" title={content[i+2].alt} alt={content[i+2].alt} />
+                            </a> 
+                        </div>
+                        <div  className="gallery2622__item--4">
+                            <a href={"#"+content[i+3].id+ "_popup"}>
+                                <img id={content[i+3].id} src={content[i+3].content} className="gallery__img" title={content[i+3].alt} alt={content[i+3].alt} />
+                            </a> 
+                        </div>
+                    </div>);
+                    popups.push(this.renderImg(content[i].id, content[i].content, content[i].alt));
+                    popups.push(this.renderImg(content[i + 1].id, content[i+ 1].content, content[i+1].alt));
+                    popups.push(this.renderImg(content[i + 2].id, content[i+2].content, content[i+2].alt));
+                    popups.push(this.renderImg(content[i + 3].id, content[i+3].content, content[i+3].alt));
+                    i= i+3;
                
             }
-            else if(Number(element.size) === 6.00){
-                elClass+= ' col-md-6';
-                elStyle.height= 15+'rem';
-                elStyle.objectFit= 'cover';
+            else if((Number(content[i].size) === 6.00 && Number(content[i+1].size) === 6.50 && Number(content[i+2].size) === 6.50) || (Number(content[i].size) === 8.00 && Number(content[i+1].size) === 4.50) || (Number(content[i].size) === 6.00 && Number(content[i+1].size) === 4.50)){
+                blogContent.push(
+                    <div key={content[i].id} className="gallery662">
+                        <div className="gallery662__item--1">
+                            <a href={"#"+content[i].id+ "_popup"} >
+                                <img id={content[i].id} src={content[i].content} className="gallery662__img" title={content[i].alt} alt={content[i].alt} />
+                            </a>
+                        </div>
+                        <div className="gallery662__item--2"  >
+                            <a href={"#"+content[i + 1].id+ "_popup"} >
+                                <img id={content[i +1].id} src={content[i + 1].content} className="gallery662__img" title={content[i +1].alt} alt={content[i +1].alt} />
+                            </a> 
+                        </div>
+                        <div className="gallery662__item--3"  >
+                            <a href={"#"+content[i+2].id+ "_popup"} >
+                                <img id={content[i+2].id} src={content[i+2].content} className="gallery662__img" title={content[i+2].alt} alt={content[i+2].alt} />
+                            </a> 
+                        </div>
+                    </div>);
+                    popups.push(this.renderImg(content[i].id, content[i].content, content[i].alt));
+                    popups.push(this.renderImg(content[i + 1].id, content[i+ 1].content, content[i+1].alt));
+                    popups.push(this.renderImg(content[i + 2].id, content[i+2].content, content[i+2].alt));
+                    i= i+2;
             }
-            else if(Number(element.size) === 8.00){
-                elClass+= ' col-md-8 height-large-resp float-left';
+            else if((Number(content[i].size) === 6.00 && Number(content[i+1].size) === 3.00)||(Number(content[i].size) === 6.00 && Number(content[i+1].size) === 6.00) || (Number(content[i].size) === 8.00 && Number(content[i+1].size) === 4.00) ){
+                blogContent.push(
+                    <div key={content[i].id} className="gallery66">
+                        <div  className="gallery66__item--1">
+                            <a href={"#"+content[i].id+ "_popup"} >
+                                <img id={content[i].id} src={content[i].content} className="gallery__img" title={content[i].alt} alt={content[i].alt} />
+                            </a> 
+                        </div>
+                        <div className="gallery66__item--2"  >
+                            <a href={"#"+content[i + 1].id+ "_popup"} >
+                                <img id={content[i +1].id} src={content[i + 1].content} className="gallery__img" title={content[i +1].alt} alt={content[i +1].alt} />
+                            </a> 
+                        </div>
+                    </div>);
+                    popups.push(this.renderImg(content[i].id, content[i].content, content[i].alt));
+                    popups.push(this.renderImg(content[i + 1].id, content[i+ 1].content, content[i+1].alt));
+
+                    i= i+1;
+            }
+            else if(Number(content[i].size) === 6.00 && Number(content[i+1].size) === 4.30){
+                blogContent.push(
+                    <div key={content[i].id} className="gallery643">
+                        <div className="gallery643__item--1">
+                            <a href={"#"+content[i].id+ "_popup"} >
+                                <img id={content[i].id} src={content[i].content} className="gallery__img" title={content[i].alt} alt={content[i].alt} />
+                            </a> 
+                        </div>
+                        <div className="gallery643__item--2">
+                            <a href={"#"+content[i + 1].id+ "_popup"} >
+                                <img id={content[i +1].id} src={content[i + 1].content} className="gallery__img" title={content[i +1].alt} alt={content[i +1].alt} />
+                            </a> 
+                        </div>
+                        <div  className="gallery643__item--3">
+                            <a href={"#"+content[i+2].id+ "_popup"} >
+                                <img id={content[i+2].id} src={content[i+2].content} className="gallery__img" title={content[i+2].alt} alt={content[i+2].alt} />
+                            </a> 
+                        </div>
+                        <div  className="gallery643__item--4">
+                            <a href={"#"+content[i+3].id+ "_popup"}>
+                                <img id={content[i+3].id} src={content[i+3].content} className="gallery__img" title={content[i+3].alt} alt={content[i+3].alt} />
+                            </a> 
+                        </div>
+                    </div>);
+                    popups.push(this.renderImg(content[i].id, content[i].content, content[i].alt));
+                    popups.push(this.renderImg(content[i + 1].id, content[i+ 1].content, content[i+1].alt));
+                    popups.push(this.renderImg(content[i + 2].id, content[i+2].content, content[i+2].alt));
+                    popups.push(this.renderImg(content[i + 3].id, content[i+3].content, content[i+3].alt));
+                    i= i+3;
+               
             }
             else {
-                elStyle.width = 60 + '%';
-                elStyle.margin = 0+ " auto";
+                blogContent.push( 
+                    <div key={content[i].id} className="galleryFlex">
+                        <div  className="galleryFlex__content--1">
+                            <a href={"#"+content[i].id+ "_popup"} >
+                                <img id={content[i].id} src={content[i].content} className="galleryFlex__item" title={content[i].alt} alt={content[i].alt} />
+                            </a> 
+                        </div>
+                    </div>
+                );
+                popups.push(this.renderImg(content[i].id, content[i].content, content[i].alt));
             }
-            console.log(elStyle)
-            blogContent.push( 
-            <div style={elStyle}>
-                <a href={"#"+element.id+ "_popup"} >
-                    <img key={element.id} id={element.id} src={element.content} style={{width: 100 +"%" }}title={element.alt} alt={element.alt} />
-                </a> 
-            </div>
-            );
-            popups.push(this.renderImg(element.id, element.content, element.alt));
         } 
-        else if(element.type === 'title' || element.type === 'big_title') blogContent.push(<h2 class="h1 mt-5 mb-3 font-weight-bold" key={element.id}>{ReactHtmlParser(element.content)}</h2>);
-      })
+      }
       return blogContent.concat(popups);
     }
 
     renderImg = (id, src, alt) =>{
         return(
-            <div class="popup" id={id +"_popup"}>
-                    <a href={"#"+ id} class="popup__close">&times;</a>      
-                <div class="popup__content">
-                    <img src={src} alt={alt} class="popup__img"/>
+            <div key={id+ "popup"} className="popup" id={id +"_popup"}>
+                    <a href={"#"+ id} className="popup__close">&times;</a>      
+                <div className="popup__content">
+                    <img src={src} alt={alt} className="popup__img"/>
+                </div>
             </div>
-        </div>
         )
     }
 
@@ -112,8 +277,8 @@ export class Blog extends React.Component {
                 <section className="container">
                     <div className="row">
                         <div className="col-lg-12">
-                            <p>Tags</p>
-                            <p>Leave a comment</p>
+                            {/* <p>Tags</p>
+                            <p>Leave a comment</p> */}
                         </div>
                     </div>  
                 </section>

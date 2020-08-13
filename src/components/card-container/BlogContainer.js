@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './BlogContainer.css';
+import ReactHtmlParser from 'react-html-parser';
 
 export default class BlogContainer extends React.Component {
     constructor(){
@@ -43,14 +44,16 @@ export default class BlogContainer extends React.Component {
         return (
             <div className="mt-3 col-lg-4 d-flex align-items-stretch mb-4">
                 <div className="card">
-                    <img src={src} className="card-img-top" alt={alt}/>
+                    <Link to={`/blog/${blog_id}`}>
+                        <img src={src} className="card-img-top" alt={alt}/>
+                    </Link>
                     <div className="card-body">
                         <Link to={`/blog/${blog_id}`}>
-                            <h3 className="card-title">{title}</h3>
+                            <h3 className="card-title card__color">{title}</h3>
                         </Link>
-                        <p  className="card-text">{text}</p>  
+                        <p  className="card-text">{ReactHtmlParser(text)}</p>  
                         <div className="mx-auto">
-                            <Link className="btn btn-secondary" to={`/blog/${blog_id}`}>
+                            <Link className="btn btn-secondary btn--lightgreen" to={`/blog/${blog_id}`}>
                             Read More
                             </Link>
                         </div>

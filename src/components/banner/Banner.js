@@ -1,11 +1,12 @@
 import React from 'react';
+import jetSetBanner from '../../asset/jetsettoeat_yellow.jpg';
 
 const banner = () => {
     return (
         <div className="container">
             <div className="row">
                 <div className="col-xl-12">
-                    <img className="img-fluid" src="https://mouthfuloftravel.files.wordpress.com/2018/03/cropped-mouthful-of-travel-02.jpg" alt="banner"/>
+                    <img className="img-fluid" src={jetSetBanner} alt="banner"/>
                 </div>
             </div>
         </div>  
