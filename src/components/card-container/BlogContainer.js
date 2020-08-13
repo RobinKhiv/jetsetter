@@ -51,9 +51,9 @@ export default class BlogContainer extends React.Component {
                         <Link to={`/blog/${blog_id}`}>
                             <h3 className="card-title card__color">{title}</h3>
                         </Link>
-                        <p  className="card-text">{ReactHtmlParser(text)}</p>  
+                        <p  className="card__text">{ReactHtmlParser(text)}</p>  
                         <div className="mx-auto">
-                            <Link className="btn btn-secondary btn--lightgreen" to={`/blog/${blog_id}`}>
+                            <Link className="btn btn__secondary btn--lightgreen" to={`/blog/${blog_id}`}>
                             Read More
                             </Link>
                         </div>

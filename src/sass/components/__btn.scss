@@ -1,5 +1,12 @@
 .btn{
-    &--lightgreen{
-        background-color: #8A9482;
+  
+    &__secondary{
+        color: #FFF;
+        background-color: #C8b7c9 ;
+        border-color: #C8b7c9 ;
     }
-}
+    &:hover{
+      background-color: #9d7982;
+      color: #FFF;
+    }
+}//#C8b7c9  #c8c7d5

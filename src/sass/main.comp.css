@@ -8,11 +8,20 @@
 body {
   box-sizing: border-box; }
 
-.btn--lightgreen {
-  background-color: #8A9482; }
+.btn__secondary {
+  color: #FFF;
+  background-color: #C8b7c9;
+  border-color: #C8b7c9; }
+
+.btn:hover {
+  background-color: #9d7982;
+  color: #FFF; }
 
 .card__color {
-  color: #4C5DC7; }
+  color: #8ba4b3; }
+
+.card__text {
+  color: #696969; }
 
 .loading {
   width: 100%;
@@ -191,3 +200,10 @@ body {
     margin: 0 auto; }
   .galleryFlex__item {
     width: 100%; }
+
+.nav-link {
+  text-transform: uppercase;
+  color: #d8d5d2 !important; }
+
+.navbar {
+  background-color: #424f5c !important; }
