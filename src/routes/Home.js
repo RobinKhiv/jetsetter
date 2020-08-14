@@ -3,6 +3,7 @@ import axios from 'axios';
 import config from '../config';
 import CardContainer from '../components/card-container/CardContainer';
 import loadingGif from '../asset/pizza.gif';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 export class Home extends React.Component {
   constructor(){
@@ -14,7 +15,7 @@ export class Home extends React.Component {
   }
   componentDidMount(){
     window.scrollTo(0, 0);
-    this.setState({isLoading: true})
+    this.setState({isLoading: true});
     axios.get(`${config.API_ENDPOINT}/blog`)
       .then(response => {
         const data = response.data.data;
@@ -39,6 +40,11 @@ export class Home extends React.Component {
       const {isLoading} = this.state;
         return (
           <React.Fragment>
+              <HelmetProvider>
+                <Helmet>
+                    <title>Jetset To Eat</title>  
+                </Helmet>
+              </HelmetProvider>
             { isLoading ? this.renderLoading() : <CardContainer data={data} />}
           </React.Fragment>
         )

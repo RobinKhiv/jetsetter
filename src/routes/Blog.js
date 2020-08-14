@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import config from '../config';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import './Blog.css';
+
 
 export class Blog extends React.Component {
     constructor(){
         super();
         this.state = {
             blog: [],
-            current_blog_id: null
+            current_blog_id: null,
+            title: "",
+            description: ""
         }
     }
     componentDidMount(){
@@ -34,7 +38,9 @@ export class Blog extends React.Component {
                 const blogContent = data.data;
                 this.setState({
                     blog: blogContent,
-                    current_blog_id: blog_id
+                    current_blog_id: blog_id,
+                    title: blogContent[1].content,
+                    description: blogContent[2].content
                 });
             })
     }
@@ -264,9 +270,16 @@ export class Blog extends React.Component {
     }
 
     render() {
-        const blog_content = this.state.blog
+        const blog_content = this.state.blog;
+        const {title, description} = this.state;
         return (
             <React.Fragment>
+                <HelmetProvider>
+                    <Helmet>
+                        <title>Jetset: {title}</title>
+                        <meta name="description" content={description} />
+                    </Helmet>
+                </HelmetProvider>
                 <section className="container mt-4">
                     <div className="row justify-content-md-center">
                         <div className="col-lg-9">
