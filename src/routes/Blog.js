@@ -49,13 +49,16 @@ export class Blog extends React.Component {
       const popups = [];
 
       for(let i = 0; i < content.length; i++){
-        if(content[i].type === 'paragraph' || content[i].type === 'intro') 
+        if(content[i].type === 'paragraph' || content[i].type === 'intro') {
             if(content[i].content.substring(1,3)  === "ul")
                 blogContent.push(ReactHtmlParser(content[i].content));
             else
                 blogContent.push(<p className="text-body " key={content[i].id}>{ReactHtmlParser(content[i].content)}</p>);
+        }
+        else if(content[i].type === 'main_title')
+            blogContent.push(<h1 className={"h1 mt-5 mb-3 font-weight-bold color--primary1 " + content[i].class } key={content[i].id}>{content[i].content}</h1>)
         else if(content[i].type === 'title' || content[i].type === 'big_title') 
-            blogContent.push(<h2 className="h1 mt-5 mb-3 font-weight-bold" key={content[i].id}>{ReactHtmlParser(content[i].content)}</h2>);
+            blogContent.push(<h3 className={"mt-5 mb-3 color--primary1" + content[i].class} key={content[i].id}>{ReactHtmlParser(content[i].content)}</h3>);
         else if (content[i].type === `img` || content[i].type === 'img_main') {
             if(Number(content[i].size) === 3.00 && Number(content[i+1].size) === 3.00 && Number(content[i+2].size) === 3.00 && Number(content[i+3].size) === 3.00 ){   
                 blogContent.push(
@@ -136,7 +139,7 @@ export class Blog extends React.Component {
                     popups.push(this.renderImg(content[i + 2].id, content[i+2].content, content[i+2].alt));
                     i= i+2;
             }
-            else if((Number(content[i].size) === 6.00 && Number(content[i+1].size) === 2.00) || (Number(content[i].size) === 2.00 && Number(content[i+1].size) === 6.00) || (Number(content[i].size) === 4.00 && Number(content[i+1].size) === 2.00)){
+            else if((Number(content[i].size) === 4.00 && Number(content[i+1].size) === 4.50) || (Number(content[i].size) === 6.00 && Number(content[i+1].size) === 2.00) || (Number(content[i].size) === 2.00 && Number(content[i+1].size) === 6.00) || (Number(content[i].size) === 4.00 && Number(content[i+1].size) === 2.00)){
                 blogContent.push(
                     <div key={content[i].id} className="gallery2622">
                         <div  className="gallery2622__item--1">

@@ -8,6 +8,24 @@
 body {
   box-sizing: border-box; }
 
+h1, h2, h3, h4 {
+  font-family: 'Bowlby One SC'; }
+
+p, ul {
+  font-family: 'Raleway', sans-serif; }
+
+.u-text-center {
+  text-align: center !important; }
+
+.color--primary1 {
+  color: #8ba4b3; }
+
+ul {
+  margin-left: 2.5em; }
+
+.u-display-none {
+  display: none; }
+
 .btn__secondary {
   color: #FFF;
   background-color: #C8b7c9;
@@ -137,7 +155,7 @@ body {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, minmax(auto, 150px));
+  grid-template-rows: repeat(2, minmax(auto, 220px));
   grid-row-gap: .2em;
   grid-column-gap: .2em;
   margin-bottom: 1em; }
